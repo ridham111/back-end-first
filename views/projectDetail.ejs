@@ -1,0 +1,224 @@
+<!-- views/projectDetail.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Tracker - Project Detail</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+    h1 {
+      color: #333;
+      font-size: 36px;
+    }
+    .project-details {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .filters {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+    .issue-list {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    li:last-child {
+      border: none;
+    }
+    h3 {
+      color: #333;
+      font-size: 24px;
+      margin: 0;
+    }
+    p {
+      color: #666;
+      margin: 0;
+    }
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    button[type="submit"] {
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    }
+    button[type="submit"]:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .issue-list li {
+      transition: transform 0.2s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .issue-list li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    a.button {
+      display: inline-block;
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
+    a.button:hover {
+      background-color: #0056b3;
+    }
+    button[type="submit"] {
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+    button[type="submit"]:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    .issue-list li {
+      transition: transform 0.2s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .issue-list li:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+    a.button {
+      transition: background-color 0.3s;
+    }
+    a.button:hover {
+      background-color: #0056b3;
+    }
+    .selectpicker {
+      width: 40%;
+      padding: 0.375rem 1.75rem 0.375rem 0.75rem;
+      border: 1px solid #ced4da;
+      border-radius: 0.25rem;
+    }
+
+    /* Style for multi-select dropdown */
+    .selectpicker[multiple] {
+      height: auto;
+      overflow-y: hidden;
+    }
+    
+
+    .selectpicker ::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+}
+
+    /* Adjust the form components for better spacing */
+    .filters label {
+      margin-right: 10px;
+    } 
+  </style>
+</head>
+<body>
+  <div class="">
+    <div class="header">
+      <h1>Project Detail: <%= project.name %></h1>
+      <p>Description: <%= project.description %></p>
+      <p>Author: <%= project.author %></p>
+    </div>
+    
+    <div class="filters">
+      <h2>Filters</h2>
+      <!-- Filter Form -->
+      <form action="/projects/<%= project._id %>" id="filterForm" method="GET">
+        <label for="labels">Filter by Labels:</label>
+        <select name="labels"class="selectpicker"  multiple > 
+          <option value="">All</option>
+          <% all_Issue.forEach(issue => {
+            issue.labels.forEach(label => { %>
+              <option value="<%= label %>"><%= label %></option>
+            <% });
+          }); %>
+        </select>
+    
+        <label for="author">Filter by Author:</label>
+        <select name="author">
+          <option value="">All</option>
+          <% issues.forEach(issue => { %>
+            <option value="<%= issue.author %>"><%= issue.author %></option>
+          <% }); %>
+        </select>
+        <label for="search">Search:</label>
+        <input type="text" name="search" placeholder="Enter title or description">
+        
+        <button type="submit">Apply Filters</button>
+      </form>
+    </div>
+
+    <div class="issue-list">
+      <h2>Issues</h2>
+      <ul>
+        <% issues.forEach(issue => { %>
+          <li>
+            <h3><%= issue.title %></h3>
+            <p><%= issue.description %></p>
+            <p>Labels: <%= issue.labels.join(', ') %></p>
+            <p>Author: <%= issue.author %></p>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+    
+    <a href="/projects/<%= project._id %>/issues/new">Create New Issue</a>
+    <a href="/">Back to Home</a>
+  </div>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  
+  <script>
+    $(document).ready(function() {
+      $('.selectpicker').selectpicker();
+    });
+  </script>
+</body>
+</html>
+
+
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Issue Tracker - Create Issue</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f5f5f5; color: #333; margin: 0; padding: 20px;">
+  <h1 style="text-align: center; margin-bottom: 20px;">Create New Issue</h1>
+  <form action="/projects/<%= project._id %>/issues" method="POST" style="max-width: 400px; margin: 0 auto;">
+    <div style="margin-bottom: 10px;">
+      <label for="title" style="display: block; margin-bottom: 5px;">Title:</label>
+      <input type="text" name="title" required style="width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="description" style="display: block; margin-bottom: 5px;">Description:</label>
+      <textarea name="description" required style="width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="labels" style="display: block; margin-bottom: 5px;">Labels:</label>
+      <input type="text" name="labels" placeholder="Label 1, Label 2, ..." style="width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+    <div style="margin-bottom: 10px;">
+      <label for="author" style="display: block; margin-bottom: 5px;">Author:</label>
+      <input type="text" name="author" required style="width: 100%; padding: 8px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+    <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; font-size: 16px; border: none; border-radius: 4px; cursor: pointer;">Create Issue</button>
+  </form>
+  <a href="/projects/<%= project._id %>" style="display: block; margin-top: 20px; text-align: center; color: #007bff; text-decoration: none; font-size: 16px;">Back to Project Detail</a>
+</body>
+</html>
